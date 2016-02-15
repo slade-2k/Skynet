@@ -16,7 +16,6 @@ public class Path {
 	private Queue<Node> queue = new LinkedList<>();
 
 	private List<Node> start;
-	private List<Node> origin;
 	private Node node;
 
 	public Path(Map<Integer, Node> nodeList, List<Node> gateways, Node start) {
