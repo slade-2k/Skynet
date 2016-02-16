@@ -13,13 +13,18 @@ public class Skynet {
 	public static void main(String[] args) {
 		Skynet skynet = new Skynet();
 		skynet.initGraph();
-		skynet.initGame();
+		try {
+			skynet.initGame();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}	
 	
 	public void initGraph() {
 		
 		graph = new Graph();
-		backdoor=SkynetSubnet.createRandomSubnet(10);
+		backdoor=SkynetSubnet.createRandomSubnet(99);
 		//backdoor = SkynetSubnet.createBackdoorToExistingSubnet(3);
 		links = backdoor.getNodeLinks();
 		
@@ -34,16 +39,14 @@ public class Skynet {
 			System.out.println("Gateway " + n.getIndex());
 		}
 		
-		path = new Path(graph.getAllNodes(), graph.getGatewayNodes(), graph.getNode(backdoor.getAgentPosition()));
+		path = new Path(graph.getGatewayNodes());
 		
 	}
 		
-		/************************/
 	
 	
-	public void initGame() {
+	public void initGame() throws Exception {
 		int pos = backdoor.getAgentPosition();
-		
 
 		while (backdoor.isAgentStillMoving()) {
 			pos = backdoor.getAgentPosition();
@@ -51,6 +54,7 @@ public class Skynet {
 			
 			Node start2 = path.calcPath(graph.getNode(pos));
 			Node end2 = path.getGatewayToCut(start2);
+			System.out.println("cut " + start2.getIndex() + " to " + end2.getIndex() );  
 			graph.removeEdges(start2, end2);
 			backdoor.disconnectNodesBeforeAgentMovesOn(start2.getIndex(), end2.getIndex());
 		}

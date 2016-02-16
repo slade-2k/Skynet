@@ -10,10 +10,6 @@ public class Graph {
 	private Map<Integer, Node> nodeMap = new HashMap<>();
 	private List<Node> gatewayNodes = new ArrayList<>();
 	
-	public Graph(){
-
-	}
-	
 	public Node addNode(int index) {
 		if (!this.nodeMap.containsKey(index)) {
 			this.nodeMap.put(index, new Node(index));	
