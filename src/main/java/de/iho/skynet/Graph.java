@@ -6,53 +6,61 @@ import java.util.List;
 import java.util.Map;
 
 public class Graph {
-	
+
 	private Map<Integer, Node> nodeMap = new HashMap<>();
 	private List<Node> gatewayNodes = new ArrayList<>();
-	
-	public Node addNode(int index) {
+
+	public Graph(int[][] nodeLinks, int[] gatewayNodes) {
+		for (int[] link : nodeLinks) {
+			this.addEdge(link[0], link[1]);
+		}
+		
+		this.setGatewayNodes(gatewayNodes);
+	}
+
+	private Node addNode(int index) {
 		if (!this.nodeMap.containsKey(index)) {
-			this.nodeMap.put(index, new Node(index));	
+			this.nodeMap.put(index, new Node(index));
 		}
 		return nodeMap.get(index);
 	}
-	
-	public void addEdge(int index, int edgeIndex) {
+
+	private void addEdge(int index, int edgeIndex) {
 		Node nodeOrigin = addNode(edgeIndex);
 		Node nodeDestination = addNode(index);
-		
+
 		nodeOrigin.addEdge(nodeDestination);
-		nodeDestination.addEdge(nodeOrigin);	
+		nodeDestination.addEdge(nodeOrigin);
 	}
-	
+
 	public Node getNode(int index) {
 		if (this.nodeMap.containsKey(index)) {
-			return this.nodeMap.get(index);			
-		}
-		return null;
+			return this.nodeMap.get(index);
+		} 	
+		return null;		
 	}
-	
+
 	public Map<Integer, Node> getAllNodes() {
 		return nodeMap;
 	}
-	
-	public void setGatewayNodes(int[] gatewayNodes) {
+
+	private void setGatewayNodes(int[] gatewayNodes) {
 		for (int node : gatewayNodes) {
 			this.gatewayNodes.add(getNode(node));
 		}
 	}
-	
+
 	public List<Node> getGatewayNodes() {
 		return this.gatewayNodes;
 	}
-	
+
 	public int getSize() {
 		return nodeMap.size();
 	}
-	
+
 	public void removeEdges(Node node1, Node node2) {
 		node1.removeEdge(node2);
 		node2.removeEdge(node1);
 	}
-	
+
 }

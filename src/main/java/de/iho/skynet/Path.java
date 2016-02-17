@@ -7,58 +7,57 @@ import java.util.Queue;
 
 public class Path {
 
-	private List<Node> gateways;
-	private List<Node> visited;
-	private Queue<Node> queue = new LinkedList<>();
-
+	private List<Node> gatewayList;
+	private List<Node> visitedNodes;
+	private Queue<Node> queuedNodes = new LinkedList<>();
 
 	public Path(List<Node> gateways) {
-		this.gateways = gateways;
+		this.gatewayList = gateways;
 	}
 
-	public Node calcPath(Node origin) throws Exception {
-		
-		queue.add(origin);
-		visited = new ArrayList<>();
-		
-		while (!queue.isEmpty()) {	
-			Node edgeOfOrigin = queue.poll();
-			if (!visited.contains(edgeOfOrigin)) {
-				for (int i = 0; i < edgeOfOrigin.getEdges().size(); i++) {
-					queue.add(edgeOfOrigin.getEdges().get(i));
-					//Node gateway = calcEdgeToCut(edgeOfOrigin.getEdges().get(i));
-					//if (gateway != null) {
-					if (isGateway(edgeOfOrigin.getEdges().get(i))) {
-						queue.clear();
-						return edgeOfOrigin;
-					}
+	public Node calcShortestConnectionToGateway(Node originNode) {
+
+		queuedNodes.add(originNode);
+		visitedNodes = new ArrayList<>();
+
+		while (!queuedNodes.isEmpty()) {
+			Node actualNode = queuedNodes.poll();
+			if (!visitedNodes.contains(actualNode)) {
+
+				Node nextToGateway = checkEdges(actualNode);
+				if (nextToGateway != null) {
+					return nextToGateway;
 				}
-				visited.add(edgeOfOrigin);
+				visitedNodes.add(actualNode);
 			}
 		}
-		throw new Exception("Fail");
+		return null;
 	}
 
-	public boolean isGateway(Node actualNode) {
-		if (gateways.contains(actualNode)) {
-			return true;
-		}
-		return false;
-	}
-	
-	public Node getConnectedGateway(Node actualNode) {
-		for (Node gateway : gateways) {
-			if (actualNode.equals(gateway)) {
-				return gateway;
+	private Node checkEdges(Node actualNode) {
+		
+		for (Node node : actualNode.getEdges()) {
+			queuedNodes.add(node);
+
+			if (isGateway(node)) {
+				queuedNodes.clear();
+				return actualNode;
 			}
 		}
 		return null;
 	}
 	
-	public Node getGatewayToCut(Node startNode) {
-		for (int i = 0; i < gateways.size(); i++) {
-			if (startNode.getEdges().contains(gateways.get(i))) {
-				return gateways.get(i);
+	private boolean isGateway(Node actualNode) {
+		if (gatewayList.contains(actualNode)) {
+			return true;
+		}
+		return false;
+	}
+
+	public Node getConnectedGateway(Node startNode) {
+		for (Node gateway : gatewayList) {
+			if (startNode.getEdges().contains(gateway)) {
+				return gateway;
 			}
 		}
 		return null;
