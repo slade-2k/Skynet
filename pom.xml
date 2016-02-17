@@ -2,18 +2,33 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.iho</groupId>
+	<groupId>de.iks.iho</groupId>
 	<artifactId>skynet</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>skynet</name>
 	<url>http://maven.apache.org</url>
-	<description>Skynet wuhuu</description>
+	<description>SkynetVirus</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	
+	<!--  Compiler auf JDK 1.8 setzen -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
@@ -29,6 +44,22 @@
 			<artifactId>JUnitParams</artifactId>
 			<version>1.0.4</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<!--  Skynet spezifische Artifacts -->
+		<dependency>
+			<groupId>de.iks.toedter</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/commons-math3-3.6.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>de.iks.toedter</groupId>
+			<artifactId>skynet</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/skynet.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
