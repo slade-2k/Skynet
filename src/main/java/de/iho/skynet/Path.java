@@ -15,8 +15,7 @@ public class Path {
 		this.gatewayList = gateways;
 	}
 
-	public Node calcShortestConnectionToGateway(Node originNode) {
-
+	public Node breadthSearch(Node originNode) {
 		queuedNodes.add(originNode);
 		visitedNodes = new ArrayList<>();
 
@@ -35,7 +34,6 @@ public class Path {
 	}
 
 	private Node checkEdges(Node actualNode) {
-		
 		for (Node node : actualNode.getEdges()) {
 			queuedNodes.add(node);
 
@@ -46,7 +44,7 @@ public class Path {
 		}
 		return null;
 	}
-	
+
 	private boolean isGateway(Node actualNode) {
 		if (gatewayList.contains(actualNode)) {
 			return true;

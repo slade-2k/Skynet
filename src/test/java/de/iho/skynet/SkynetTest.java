@@ -16,18 +16,17 @@ import skynet.SubnetBackdoor;
 @RunWith(JUnitParamsRunner.class)
 public class SkynetTest {
 
-	
 	public static List<Object[]> data() {
 		final List<Object[]> parameters = new ArrayList<>();
-		
+
 		parameters.add(new Object[] { true, SkynetSubnet.createBackdoorToExistingSubnet(1) });
 		parameters.add(new Object[] { true, SkynetSubnet.createBackdoorToExistingSubnet(2) });
 		parameters.add(new Object[] { true, SkynetSubnet.createBackdoorToExistingSubnet(3) });
-		
+
 		for (int i = 2; i < 100; i++) {
 			parameters.add(new Object[] { true, SkynetSubnet.createRandomSubnet(i) });
 		}
-		
+
 		return parameters;
 	}
 
@@ -36,6 +35,7 @@ public class SkynetTest {
 	public void whenInputIsExistingSubnetAlphaThenWorldShouldBeSaved(boolean expected, SubnetBackdoor subnet) {
 		Skynet skynet = new Skynet(subnet);
 		boolean actual = skynet.saveTheWorld();
+
 		assertEquals(expected, actual);
 	}
 

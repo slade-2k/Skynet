@@ -13,10 +13,9 @@ public class PathTest {
 		Graph graph = new Graph(nodeArr, gatewayArr);
 
 		Path path = new Path(graph.getGatewayNodes());
-		Node actual = null;
+		
+		Node actual = path.breadthSearch(graph.getNode(0));
 		Node expected = graph.getNode(0);
-
-		actual = path.calcShortestConnectionToGateway(graph.getNode(0));
 
 		assertEquals(expected, actual);
 	}
@@ -29,7 +28,7 @@ public class PathTest {
 
 		Path path = new Path(graph.getGatewayNodes());
 
-		Node actual = path.calcShortestConnectionToGateway(graph.getNode(0));
+		Node actual = path.breadthSearch(graph.getNode(0));
 		Node expected = null;
 
 		assertEquals(expected, actual);

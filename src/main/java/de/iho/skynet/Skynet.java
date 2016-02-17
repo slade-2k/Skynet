@@ -9,29 +9,21 @@ public class Skynet {
 	private SubnetBackdoor backdoor;
 
 	public Skynet(SubnetBackdoor subnetBackdoor) {
-
 		this.backdoor = subnetBackdoor;
 		this.initGraph();
 	}
 
-	public SubnetBackdoor getBackdoor() {
-
-		return this.backdoor;
-	}
-
 	public void initGraph() {
-
 		graph = new Graph(backdoor.getNodeLinks(), backdoor.getGatewayNodes());
 		path = new Path(graph.getGatewayNodes());
 
 	}
 
 	public boolean saveTheWorld() {
-
 		while (backdoor.isAgentStillMoving()) {
 			int pos = backdoor.getAgentPosition();
 
-			Node originNode = path.calcShortestConnectionToGateway(graph.getNode(pos));
+			Node originNode = path.breadthSearch(graph.getNode(pos));
 			Node destinationNode = path.getConnectedGateway(originNode);
 			graph.removeEdges(originNode, destinationNode);
 			backdoor.disconnectNodesBeforeAgentMovesOn(originNode.getIndex(), destinationNode.getIndex());
